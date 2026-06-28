@@ -1,0 +1,456 @@
+[gd_scene load_steps=28 format=3 uid="uid://6j7o6ai8one5"]
+
+[ext_resource type="Texture2D" uid="uid://b3xsh1nja5aod" path="res://Дизайн без названия.png" id="1_w7k6m"]
+[ext_resource type="Script" uid="uid://drv05w1o1dfnl" path="res://store.gd" id="2_sqexo"]
+[ext_resource type="Texture2D" uid="uid://barnsn4yhevk0" path="res://Дизайн без названия(1).png" id="3_cdrqv"]
+[ext_resource type="Script" uid="uid://rcah3r7htib1" path="res://button_4.gd" id="3_sqexo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgoqi"]
+bg_color = Color(0.85033846, 0.7550892, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32282233, 0.283572, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0jrim"]
+bg_color = Color(0.5438838, 0.4346698, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.31764707, 0.2784314, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0eff6"]
+bg_color = Color(0.70988643, 0.63042563, 1.92523e-07, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.30588236, 0.26666668, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jk4pt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpn7q"]
+bg_color = Color(0.85033846, 0.7550892, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32282233, 0.283572, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk4pt"]
+bg_color = Color(0.2711988, 0.45388764, 0.68458855, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5rm6q"]
+bg_color = Color(0.27058825, 0.45490196, 0.6862745, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwiku"]
+bg_color = Color(0.27058825, 0.45490196, 0.6862745, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n2nxk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbgm6"]
+bg_color = Color(0, 0.4, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(9.62615e-08, 0.20664063, 0.5516615, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gyk0w"]
+bg_color = Color(8.663535e-07, 0.23231894, 0.61120147, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.20784314, 0.5529412, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqexo"]
+bg_color = Color(0, 0.31746, 0.80861634, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.20392157, 0.5411765, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lbgm6"]
+
+[sub_resource type="GDScript" id="GDScript_gdaxf"]
+script/source = "extends Button
+
+var clicks = 0
+var cpc = 1
+var cps = 0
+var cpcCost = 100
+var cpsCost = 10
+var speedupCost = 1000
+var criticalCost = 350
+var criticalChance:float = 0.00
+
+@onready var clicksLabel = $\"../ClicksContainer/Clicks\"
+@onready var cpcLabel = $\"../CPCContainer/CPC\"
+@onready var upgradeButton = $\"../Store/Container/Upgrade\"
+@onready var clickerButton = $\"../Store/Container/AddClicker\"
+@onready var cpsLabel = $\"../CPSContainer/CPS\"
+@onready var timer = $\"../Timer\"
+@onready var speedupButton = $\"../Store/Container/SpeedUp\"
+@onready var criticalButton = $\"../Store/Container/Critical\"
+@onready var criticalLabel = $\"../CritContainer/Critical\"
+
+func update():
+	clicksLabel.text = \"Клики: \" + str(clicks)
+	cpcLabel.text=\"Клики в клик: \" + str(cpc)
+	cpsLabel.text = \"Клики в секунду: \" + str(cps)
+	upgradeButton.text=\"Улучшить - \" + str(cpcCost) + \" клики\"
+	clickerButton.text=\"Кликер - \" + str(cpsCost) + \" клики\"
+	speedupButton.text=\"Ускориться - 1000 клики\"
+	criticalButton.text=\"Критический - \" + str(criticalCost) + \" клики\" 
+	criticalLabel.text=\"Шанс критического - \" + str(int(criticalChance*100)) + \"%\"
+
+func _ready():
+	update()
+	upgradeButton.pressed.connect(on_upgrade)
+	clickerButton.pressed.connect(on_addclicker)
+	speedupButton.pressed.connect(on_speedup)
+	criticalButton.pressed.connect(on_critical)
+	timer.timeout.connect(on_timeout)
+
+func _on_pressed():
+	if(randf()<criticalChance):
+		clicks += cpc
+	clicks += cpc
+	update()
+
+func on_upgrade():
+	if (clicks>=cpcCost):
+		clicks -= cpcCost
+		cpcCost *= 2*cpc
+		cpc += 1
+		
+		update()
+
+func on_addclicker():
+	if(clicks>=cpsCost):
+		clicks -= cpsCost
+		cpsCost += 2*cps
+		cps += 1
+		
+		update()
+
+func on_timeout():
+	clicks += cps
+	update()
+
+func on_speedup():
+	if(clicks>=speedupCost):
+		clicks -= speedupCost
+		speedupButton.hide()
+		timer.wait_time = 0.75
+		update()
+
+func on_critical():
+	if(clicks>=criticalCost):
+		clicks -= criticalCost
+		criticalCost += 5000*criticalChance
+		criticalChance += 0.01
+		if(criticalChance==1):
+			criticalButton.hide()
+		update()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7k6m"]
+bg_color = Color(2.887845e-06, 0.7067202, 0.5211386, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(6.016344e-07, 0.30599084, 0.21854559, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdrqv"]
+bg_color = Color(0.7552851, 0.2808677, 0.99999946, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.39476785, 0.00090683147, 0.5515306, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cdrqv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4icnp"]
+bg_color = Color(0, 0.6279837, 0.98666674, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.455805, 0.72584724, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bgoqi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qyel7"]
+bg_color = Color(0.97331387, 0.00060067174, 0.94243056, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6966598, 0.00028358639, 0.6737086, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2nxk"]
+bg_color = Color(0.27058825, 0.45490196, 0.6862745, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ofhd2"]
+bg_color = Color(0.27058825, 0.45490196, 0.6862745, 1)
+corner_radius_top_left = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w7k6m"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1148.0
+offset_bottom = 646.0
+
+[node name="Backrooms" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1159.0
+offset_bottom = 654.0
+color = Color(1.540184e-06, 0.7444989, 0.62058014, 1)
+
+[node name="Store" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 929.0
+offset_top = 2.0
+offset_right = 1158.0
+offset_bottom = 653.0
+
+[node name="Container" type="VBoxContainer" parent="Store"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 19.0
+offset_right = 212.0
+offset_bottom = 621.0
+
+[node name="Upgrade" type="Button" parent="Store/Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_bgoqi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0jrim")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0eff6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jk4pt")
+text = "Улучшить"
+autowrap_mode = 2
+
+[node name="AddClicker" type="Button" parent="Store/Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_bgoqi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0jrim")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0eff6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jk4pt")
+text = "Кликер"
+autowrap_mode = 2
+
+[node name="SpeedUp" type="Button" parent="Store/Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_hpn7q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0jrim")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0eff6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jk4pt")
+text = "Ускориться"
+autowrap_mode = 2
+
+[node name="Critical" type="Button" parent="Store/Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_hpn7q")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0jrim")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0eff6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jk4pt")
+text = "Ускориться"
+autowrap_mode = 1
+
+[node name="openStore" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1095.0
+offset_top = 594.0
+offset_right = 1156.0
+offset_bottom = 648.0
+theme_override_constants/icon_max_width = 55
+theme_override_icons/icon = ExtResource("1_w7k6m")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jk4pt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5rm6q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwiku")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n2nxk")
+script = ExtResource("2_sqexo")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 515.0
+offset_top = 295.0
+offset_right = 635.0
+offset_bottom = 411.0
+theme_override_colors/font_color = Color(0.6249178, 0.9327565, 0.99999994, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_lbgm6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gyk0w")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sqexo")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lbgm6")
+text = "КЛИКАЙ МЕНЯ!"
+autowrap_mode = 2
+script = SubResource("GDScript_gdaxf")
+
+[node name="ClicksContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 214.0
+offset_right = 927.0
+offset_bottom = 278.0
+
+[node name="Clicks" type="Label" parent="ClicksContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(2.382472e-06, 0.4589963, 0.3588987, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_w7k6m")
+horizontal_alignment = 1
+
+[node name="CPCContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 142.0
+offset_right = 928.0
+offset_bottom = 209.0
+
+[node name="CPC" type="Label" parent="CPCContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58322906, 0.17560318, 0.99999994, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_cdrqv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cdrqv")
+horizontal_alignment = 1
+
+[node name="CPSContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 72.0
+offset_right = 928.0
+offset_bottom = 139.0
+
+[node name="CPS" type="Label" parent="CPSContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(3.5039186e-05, 0.26620805, 0.76859283, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_4icnp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bgoqi")
+horizontal_alignment = 1
+
+[node name="CritContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 5.0
+offset_right = 928.0
+offset_bottom = 72.0
+
+[node name="Critical" type="Label" parent="CritContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.47293866, 0.000121626406, 0.45681858, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_qyel7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bgoqi")
+horizontal_alignment = 1
+
+[node name="closeStore" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 869.0
+offset_top = 594.0
+offset_right = 930.0
+offset_bottom = 648.0
+theme_override_constants/icon_max_width = 55
+theme_override_icons/icon = ExtResource("3_cdrqv")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jk4pt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n2nxk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ofhd2")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w7k6m")
+script = ExtResource("3_sqexo")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="pressed" from="openStore" to="openStore" method="_on_pressed"]
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
+[connection signal="pressed" from="closeStore" to="closeStore" method="_on_pressed"]
